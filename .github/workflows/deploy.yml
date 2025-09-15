@@ -55,16 +55,16 @@ jobs:
       - name: Importar recursos existentes
         run: |
           # Buckets S3
-          # terraform -chdir=infra import aws_s3_bucket.backend weather-states-663354324751 || true
-          # terraform -chdir=infra import aws_s3_bucket.raw weather-raw-663354324751 || true
-          # terraform -chdir=infra import aws_s3_bucket.processed weather-processed-663354324751 || true
-          # terraform -chdir=infra import aws_s3_bucket.glue_scripts weather-glue-scripts-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.backend weather-states-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.raw weather-raw-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.processed weather-processed-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.glue_scripts weather-glue-scripts-663354324751 || true
 
           # IAM Role
-          # terraform -chdir=infra import aws_iam_role.glue_role factored-glue-role || true
+          terraform -chdir=infra import aws_iam_role.glue_role factored-glue-role || true
 
           # Glue Catalog Database
-          # terraform -chdir=infra import aws_glue_catalog_database.weather_db ${AWS_ACCOUNT_ID}:weather_db || true
+          terraform -chdir=infra import aws_glue_catalog_database.weather_db ${AWS_ACCOUNT_ID}:weather_db || true
 
       - name: Validar configuração
         run: terraform -chdir=infra validate
