@@ -1,20 +1,26 @@
-import os
 import requests
+import json
+import sys
+from awsglue.utils import getResolvedOptions
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, LongType
+
+# Captura o argumento passado pelo Glue
+args = getResolvedOptions(sys.argv, ['api_key_weather'])
+api_key = args['api_key_weather']
 
 if __name__ == "__main__":
     spark = SparkSession.builder.appName("IngestWeather").getOrCreate()
 
     s3_output_path = "s3://weather-raw-663354324751"
-    api_key = os.environ.get("api_key_weather")
     city = "London"
 
+    # Faz chamada à API
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     response = requests.get(url)
     data = response.json()
 
-    # DEBUG: print raw API response
+    # DEBUG
     print("API response:", data)
 
     if "main" not in data or "weather" not in data or not data.get("weather"):
