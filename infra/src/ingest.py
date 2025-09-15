@@ -6,15 +6,20 @@ from pyspark.sql.types import StructType, StructField, StringType, DoubleType, L
 if __name__ == "__main__":
     spark = SparkSession.builder.appName("IngestWeather").getOrCreate()
 
-    # Configurações fixas
-    s3_output_path = "s3://weather-raw-663354324751"       # bucket raw
-    api_key = os.getenv("TF_VAR_API_KEY_CG")               # pega do ambiente
-    city = "São Paulo"                                     # cidade fixa
+    s3_output_path = "s3://weather-raw-663354324751"
+    api_key = os.getenv("API_KEY")
+    city = "London"
 
-    # Chamada da API
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
     response = requests.get(url)
     data = response.json()
+
+    # DEBUG: print raw API response for troubleshooting
+    print("API response:", data)
+
+    # Ensure expected fields are present
+    if "main" not in data or "weather" not in data or not data.get("weather"):
+        raise ValueError(f"Unexpected API response: {data}")
 
     record = {
         "city": data.get("name"),
@@ -34,7 +39,6 @@ if __name__ == "__main__":
 
     df = spark.createDataFrame([record], schema=schema)
 
-    # Grava parquet no bucket raw
     output_path = f"{s3_output_path}/date={record['timestamp']}"
     df.write.mode("overwrite").parquet(output_path)
 

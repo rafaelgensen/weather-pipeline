@@ -20,6 +20,3 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
-
-# Inclui todos os recursos declarados nos .tf da pasta infra
-# (Terraform automaticamente lê *.tf do mesmo diretório)

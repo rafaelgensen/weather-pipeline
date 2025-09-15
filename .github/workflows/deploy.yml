@@ -20,7 +20,7 @@ on:
           - "true"
 
 env:
-  TF_VAR_API_KEY_CG: ${{ secrets.API_KEY.API_WEATHER }}
+  TF_VAR_api_key_weather: ${{ secrets.API_KEY.API_WEATHER }}
 
 jobs:
   terraform:
