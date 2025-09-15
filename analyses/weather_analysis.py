@@ -1,10 +1,11 @@
+import os
 import requests
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Set your OpenWeather API key and the city to query
-API_KEY = '4ec181ad2f0f4b5d80cf6c099dee199a'
+API_KEY = os.getenv("TF_VAR_API_KEY_CG")
 city = 'London'
 
 # API endpoint for 5-day weather forecast (3-hour intervals)
