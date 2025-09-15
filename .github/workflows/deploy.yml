@@ -22,7 +22,6 @@ on:
 env:
   TF_VAR_api_key_weather: ${{ secrets.API_KEY.API_WEATHER }}
 
-
 jobs:
   terraform:
     name: Terraform Deploy or Destroy - Capabilities

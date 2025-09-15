@@ -18,7 +18,7 @@ resource "aws_glue_job" "ingest" {
 
   default_arguments = {
     "--TempDir"          = "s3://${aws_s3_bucket.backend.bucket}/tmp/"
-    "--api_key_weather"  = var.api_key_weather  # Must match the os.getenv key in Python
+    "--api_key_weather"  = "${var.api_key_weather}" 
     "--job-language"     = "python"
   }
 
