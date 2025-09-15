@@ -1,6 +1,6 @@
 # 🌦️ OpenWeather Data Pipeline
 
-![Analyses](assets/weather_analysis.png)
+![Analyses](assets/weather_analysis2.png)
 
 ## Overview
 
@@ -84,9 +84,3 @@ You can also **manually trigger** the workflow from GitHub Actions with an optio
   - `AWS_ACCESS_KEY_ID`
   - `AWS_SECRET_ACCESS_KEY`
   - `API_KEY_API_WEATHER` (for OpenWeather API)
-
-### 📌 Notes
-
-- Imported resources like **S3 buckets** and **IAM roles** are already created **outside** Terraform. They are imported during deployment to avoid recreation.
-- The use of the `terraform import` command inside the pipeline is **required** because Terraform does not manage pre-existing resources unless explicitly imported.
-- Although the Terraform **backend** is defined in `main.tf`, the **initial state management** is bootstrapped via CI p
