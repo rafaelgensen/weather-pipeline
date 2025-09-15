@@ -27,7 +27,7 @@ The solution is built using the following AWS components:
 
 ---
 
-## Features
+## Features 
 
 - 🛰️ Fully serverless, event-driven architecture  
 - 📅 Scheduled execution using EventBridge  
