@@ -1,12 +1,14 @@
 # 🌦️ OpenWeather Data Pipeline
 
-![Architecture](assets/OpenWeatherArchitecture.png)
+![Analyses](assets/weather_analysis.png)
 
 ## Overview
 
 This project automates the ingestion, transformation, and cataloging of weather data retrieved from the **OpenWeather API**, using a serverless data pipeline on AWS. The processed data is made available for querying through **Amazon Athena**.
 
 ## Architecture
+
+![Architecture](assets/OpenWeatherArchitecture.png)
 
 The solution is built using the following AWS components:
 
