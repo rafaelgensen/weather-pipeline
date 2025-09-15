@@ -2,8 +2,7 @@
 resource "aws_s3_object" "ingest_script" {
   bucket = aws_s3_bucket.glue_scripts.bucket
   key    = "ingest.py"
-  source = "src/ingest.py"               # Local path to the script
-  etag   = filemd5("src/ingest.py")      # Ensure changes are detected by Terraform
+  source = "src/ingest.py"
 }
 
 # AWS Glue Job to ingest data from OpenWeather API and store in S3
