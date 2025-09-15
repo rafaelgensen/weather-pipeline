@@ -3,9 +3,11 @@ terraform {
 
   backend "s3" {
     bucket = "weather-states-663354324751"
-    key    = "terraform/state.tfstate"
+    key = "data-pipeline/terraform.tfstate"
     region = "us-east-1"
-  }
+    encrypt = true
+ }
+
 
   required_providers {
     aws = {

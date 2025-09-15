@@ -46,7 +46,31 @@ jobs:
           aws-region: us-east-1
 
       - name: Inicializar Terraform
-        run: terraform -chdir=infra init
+        run: terraform -chdir=infra init -reconfigure
+
+      - name: Obter AWS Account ID
+        id: aws_account
+        run: echo "AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)" >> $GITHUB_ENV
+
+      - name: Importar recursos existentes
+        run: |
+          terraform -chdir=infra import aws_s3_bucket.backend weather-states-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.raw weather-raw-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.processed weather-processed-663354324751 || true
+          terraform -chdir=infra import aws_s3_bucket.glue_scripts weather-glue-scripts-663354324751 || true
+          
+          terraform -chdir=infra import aws_iam_role.glue_role factored-glue-role || true
+          terraform -chdir=infra import aws_iam_role.step_function_role weather-step-function-role || true
+          terraform -chdir=infra import aws_iam_role.eventbridge_invoke_role eventbridge-invoke-step-function-role || true
+          
+          terraform -chdir=infra import aws_glue_catalog_database.weather_db ${AWS_ACCOUNT_ID}:weather_db || true
+          terraform -chdir=infra import aws_glue_crawler.processed weather-processed-crawler || true
+          terraform -chdir=infra import aws_glue_job.ingest weather-ingest-job || true
+          terraform -chdir=infra import aws_glue_job.transform weather-transform-job || true
+
+          terraform -chdir=infra import aws_sfn_state_machine.weather_pipeline arn:aws:states:us-east-1:${AWS_ACCOUNT_ID}:stateMachine:weather-pipeline || true
+          terraform -chdir=infra import aws_cloudwatch_event_rule.weekly_trigger weather-weekly-trigger || true
+          terraform -chdir=infra import aws_cloudwatch_event_target.trigger_state_machine weather-weekly-trigger/weather-state-machine || true
 
       - name: Validar configuração
         run: terraform -chdir=infra validate
@@ -56,7 +80,7 @@ jobs:
 
       - name: Aplicar ou Destruir Recursos
         run: |
-          if [ "${{ github.event.inputs.destroy }}" == "true" ]; then
+          if [ "${{ github.event.inputs.destroy }}" = "true" ]; then
             echo "⚠️ Destruindo infraestrutura..."
             terraform -chdir=infra destroy -auto-approve
           else
