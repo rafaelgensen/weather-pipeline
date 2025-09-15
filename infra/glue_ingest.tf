@@ -22,7 +22,7 @@ resource "aws_glue_job" "ingest" {
     "--job-language"     = "python"
   }
 
-  glue_version = "4.0"
+  glue_version = "5.0"
   max_retries  = 0
 
   depends_on = [aws_s3_object.ingest_script]
