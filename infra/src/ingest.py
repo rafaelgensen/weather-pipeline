@@ -7,7 +7,7 @@ if __name__ == "__main__":
     spark = SparkSession.builder.appName("IngestWeather").getOrCreate()
 
     s3_output_path = "s3://weather-raw-663354324751"
-    api_key = os.getenv("API_KEY")
+    api_key = os.getenv("api_key_weather")
     city = "London"
 
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric"
