@@ -2,8 +2,7 @@
 resource "aws_s3_object" "transform_script" {
   bucket = aws_s3_bucket.glue_scripts.bucket
   key    = "transform.py"
-  source = "src/transform.py"               # Local path to the script
-  etag   = filemd5("src/transform.py")      # Ensure changes are detected by Terraform
+  source = "src/transform.py"
 }
 
 # AWS Glue Job to transform weather data and write to the processed S3 bucket

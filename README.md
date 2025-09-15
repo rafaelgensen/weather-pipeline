@@ -8,7 +8,7 @@ This project automates the ingestion, transformation, and cataloging of weather 
 
 ## Architecture
 
-![Architecture](assets/OpenWeatherArchitecture.png)
+![Architecture](assets/OpenWeatherArchitecture2.png)
 
 The solution is built using the following AWS components:
 
@@ -57,6 +57,7 @@ The solution is built using the following AWS components:
 ├── main.tf                              # Terraform root module
 ├── .github/workflows/deploy.yml         # CI/CD pipeline for Terraform
 └── README.md
+```
 
 ## 🛠️ Deployment
 
