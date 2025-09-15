@@ -1,6 +1,6 @@
-#resource "aws_s3_bucket" "backend" {
-#  bucket = "weather-states-663354324751"
-#}
+resource "aws_s3_bucket" "backend" {
+  bucket = "weather-states-663354324751"
+}
 
 resource "aws_s3_bucket" "raw" {
   bucket = "weather-raw-663354324751"
