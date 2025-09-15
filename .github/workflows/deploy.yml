@@ -60,6 +60,8 @@ jobs:
           terraform -chdir=infra import aws_s3_bucket.glue_scripts weather-glue-scripts-663354324751 || true
           terraform -chdir=infra import aws_iam_role.glue_role factored-glue-role || true
           terraform -chdir=infra import aws_glue_catalog_database.weather_db ${AWS_ACCOUNT_ID}:weather_db || true
+          terraform -chdir=infra import aws_glue_crawler.processed ${AWS_ACCOUNT_ID}:weather-processed-crawler || true
+
 
       - name: Validar configuração
         run: terraform -chdir=infra validate
