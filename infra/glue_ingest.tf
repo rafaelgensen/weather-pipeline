@@ -1,11 +1,11 @@
-# Upload the local ingest.py script to the Glue scripts bucket in S3
+# Upload ingest.py script to S3 for Glue Job
 resource "aws_s3_object" "ingest_script" {
   bucket = aws_s3_bucket.glue_scripts.bucket
   key    = "ingest.py"
   source = "src/ingest.py"
 }
 
-# AWS Glue Job to ingest data from OpenWeather API and store in S3
+# Glue Job for API ingestion
 resource "aws_glue_job" "ingest" {
   name     = "weather-ingest-job"
   role_arn = aws_iam_role.glue_role.arn
@@ -18,10 +18,10 @@ resource "aws_glue_job" "ingest" {
 
   default_arguments = {
     "--TempDir" = "s3://${aws_s3_bucket.backend.bucket}/tmp/"
+    "--API_KEY" = var.api_key_weather  # Pass API key as environment variable to Glue
   }
 
   max_retries = 0
 
-  # Ensure script is uploaded before the job is created
   depends_on = [aws_s3_object.ingest_script]
 }
